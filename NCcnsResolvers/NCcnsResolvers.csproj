@@ -8,8 +8,8 @@
     <ProjectGuid>{01E901CA-2C59-4531-9E0B-581934201FED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NCnnsResolvers</RootNamespace>
-    <AssemblyName>NCnnsResolvers</AssemblyName>
+    <RootNamespace>NCcnsResolvers</RootNamespace>
+    <AssemblyName>NCcnsResolvers</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="nnsResolvers.cs" />
+    <Compile Include="cnsResolvers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

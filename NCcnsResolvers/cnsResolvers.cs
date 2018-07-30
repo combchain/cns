@@ -3,13 +3,12 @@ using Neo.SmartContract.Framework.Services.Neo;
 using System;
 using System.Numerics;
 
-namespace NCnnsResolvers
+namespace NCcnsResolvers
 {
-    //nns解析器（地址型）
-
-    public class nnsResolvers : SmartContract
+    
+    public class cnsResolvers : SmartContract
     {
-        //以32位byte[]代表空地址
+
         private static byte[] GetZeroByte34()
         {
             byte[] zeroByte34 = new byte[34];
@@ -51,21 +50,20 @@ namespace NCnnsResolvers
             }
         }
 
-        [Appcall("c191b3e4030b9105e59c6bb56ec0d1273cd43284")]//nns注册器 ScriptHash
-        public static extern byte[] NnsRegistry(byte[] signature, string operation, object[] args);
+        [Appcall("c191b3e4030b9105e59c6bb56ec0d1273cd43284")]
+        public static extern byte[] CnsRegistry(byte[] signature, string operation, object[] args);
 
         private static byte[] NameHash(string domain, string name, string subname)
         {
-            byte[] namehash = NnsRegistry(new byte[32], "namehash", new object[]{ domain, name, subname });
+            byte[] namehash = CnsRegistry(new byte[32], "namehash", new object[]{ domain, name, subname });
 
             Runtime.Notify(new object[] { "namehash", namehash });
             return namehash;
         }
 
-        //判断当前合约调用者是否为域名所有者
         private static byte[] CheckNnsOwner(string domain, string name, string subname)
         {
-            byte[] owner = NnsRegistry(new byte[32], "query", new object[] { domain, name, subname });
+            byte[] owner = CnsRegistry(new byte[32], "query", new object[] { domain, name, subname });
 
             if (Runtime.CheckWitness(owner))
             {
@@ -88,17 +86,40 @@ namespace NCnnsResolvers
 
         private static byte[] Altert(string domain, string name, string subname, string addr)
         {
-            if (CheckNnsOwner(domain, name, subname) == new byte[] { 1 })
+            if (CheckCnsOwner(domain, name, subname) == new byte[] { 1 })
             {
                 byte[] namehash = NameHash(domain, name, subname);
 
-                //如果已有地址就先删除
                 byte[] oldAddr = Storage.Get(Storage.CurrentContext, namehash);
-                if (oldAddr != null) { Storage.Delete(Storage.CurrentContext, namehash); }
+                if (oldAddr != null) {
+                    Storage.Delete(Storage.CurrentContext, namehash);
+                }
 
-                //记录nns和地址映射
                 Storage.Put(Storage.CurrentContext, namehash, addr);
                 return GetTrueByte();
+            }
+            else
+            {
+                return GetFalseByte();
+            }
+        }
+
+        private static byte[] Delete(string domain, string name, string subname, string addr)
+        {
+            if (CheckCnsOwner(domain, name, subname) == new byte[] { 1 })
+            {
+                byte[] namehash = NameHash(domain, name, subname);
+
+                byte[] oldAddr = Storage.Get(Storage.CurrentContext, namehash);
+
+                if (oldAddr != null){
+                    Storage.Delete(Storage.CurrentContext, namehash);
+                    return GetTrueByte();
+                }
+                else
+                {
+                    return GetFalseByte();
+                }
             }
             else
             {
