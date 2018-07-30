@@ -47,7 +47,7 @@ namespace NCcnsResolverAddr
                 case "delete"://string domain, string name, string subname
                     return Delete((string)args[0], (string)args[1], (string)args[2]);
                 default:
-                    return GetFalseByte("main方法");
+                    return GetFalseByte("main");
             }
         }
 
@@ -106,11 +106,11 @@ namespace NCcnsResolverAddr
 
                 AlertResolverNotify(namehash, addr);
 
-                return GetTrueByte("altert");
+                return GetTrueByte("altert modify");
             }
             else
             {
-                return GetFalseByte("altert");
+                return GetFalseByte("altert modify");
             }
         }
 
@@ -127,16 +127,16 @@ namespace NCcnsResolverAddr
 
                     AlertResolverNotify(namehash, "");
 
-                    return GetTrueByte("delete");
+                    return GetTrueByte("delete address");
                 }
                 else
                 {
-                    return GetFalseByte("delete");
+                    return GetFalseByte("delete address");
                 }
             }
             else
             {
-                return GetFalseByte("delete");
+                return GetFalseByte("delete address");
             }
         }
     }
