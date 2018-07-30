@@ -9,7 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCcnsRegistry", "NCcnsRegis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCcnsResolvers", "NCcnsResolvers\NCcnsResolvers.csproj", "{01E901CA-2C59-4531-9E0B-581934201FED}"
 EndProject
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dapp_cns_domaincenter", "dapp_cns_domaincenter\dapp_cns_domaincenter.csproj", "{22DEEC98-DEE0-435C-B919-AB69B607026F}"
++EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
