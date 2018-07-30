@@ -8,7 +8,7 @@ namespace NCcnsResolverAddr
 {
     public class cnsResolverAddr : SmartContract
     {
-        string magic = "comb";//magic
+        string magic = "chaincomb";//magic
 
         private static byte[] GetZeroByte34(string label)
         {
@@ -99,8 +99,7 @@ namespace NCcnsResolverAddr
 
         private static byte[] Altert(string domain, string name, string subname, string addr)
         {
-            bool b = CheckCnsOwner(domain, name, subname);
-            if (b == true)
+            if (CheckCnsOwner(domain, name, subname))
             {
                 byte[] namehash = NameHash(domain, name, subname);
 
@@ -124,8 +123,7 @@ namespace NCcnsResolverAddr
 
         private static byte[] Delete(string domain, string name, string subname)
         {
-            bool b = CheckCnsOwner(domain, name, subname);
-            if (b == true)
+            if (CheckCnsOwner(domain, name, subname))
             {
                 byte[] namehash = NameHash(domain, name, subname);
 
