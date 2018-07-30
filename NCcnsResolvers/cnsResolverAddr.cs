@@ -66,9 +66,16 @@ namespace NCcnsResolverAddr
         {
             byte[] owner = CnsRegistry(new byte[32], "query", new object[] { domain, name, subname });
             Runtime.Notify(new object[] { "owner", owner });
+            byte[] zeroByte32 = new byte[32];
+            if (owner == zeroByte32) {
+                Runtime.Notify(new object[] { "CheckWitness", new byte[] { 0 } });
+                return false;
+            }
             if (Runtime.CheckWitness(owner)){
                 byte[] trueByte = new byte[] { 1 };
                 Runtime.Notify(new object[] { "CheckWitness", trueByte });
+                return true;
+
                 return true;
             }
             else{
@@ -82,7 +89,7 @@ namespace NCcnsResolverAddr
             byte[] addr = Storage.Get(Storage.CurrentContext, NameHash(domain, name, subname));
             if (addr == null) { return GetZeroByte34("query"); }
 
-            Runtime.Notify(new object[] { "addr", addr });
+            Runtime.Notify(new object[] { "addr query", addr });
             return addr;
         }
 
@@ -92,7 +99,8 @@ namespace NCcnsResolverAddr
 
         private static byte[] Altert(string domain, string name, string subname, string addr)
         {
-            if (CheckCnsOwner(domain, name, subname))
+            bool b = CheckCnsOwner(domain, name, subname);
+            if (b == true)
             {
                 byte[] namehash = NameHash(domain, name, subname);
 
@@ -116,7 +124,8 @@ namespace NCcnsResolverAddr
 
         private static byte[] Delete(string domain, string name, string subname)
         {
-            if (CheckCnsOwner(domain, name, subname))
+            bool b = CheckCnsOwner(domain, name, subname);
+            if (b == true)
             {
                 byte[] namehash = NameHash(domain, name, subname);
 
